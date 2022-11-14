@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<conio.h>
+#include<ctype.h>
+
+
+
+int priority(char a){
+    if(a=='^'){
+        return 3;
+    }else if(a=='*'||a=='/') {
+        return 2;
+    }else if(a=='+'||a=='-'){
+        return 1;
+    }else{
+        return 0;
+    }
+
+}
+
+void postfix(char *a,char *r){
+    char t[50];
+    int top=-1,j=0,i=0;
+    while (*(a+j)!='\0')
+    {
+        if (*(a+j)=='(')
+        {
+            top++;
+            t[top]=*(a+j);
+        }else if(isdigit(*(a+j))){
+          *(r+i)=*(a+j);
+            i++;
+        }else if(*(a+j)==')'){
+            while(t[top]!='('){
+              *(r+i)=t[top];
+                top=top-1;i++;
+            }
+            top=top-1;
+        }else{
+            while (priority(t[top])>=priority(*(a+j))&&top!=-1)
+            {
+              *(r+i)=t[top];
+                i++;
+                top=top-1;
+            }
+            top++;
+            t[top]=*(a+j);
+        }
+        j++;
+    }
+    while (top!=-1)
+    {
+      *(r+i)=t[top];
+        top=top-1;i++;
+    }
+   *(r+i)='\0';
+}
+
+void main(){
+    char a[50],r[50];
+
+printf("Enter expression\n");
+scanf("%s",a);
+postfix(a,r);
+printf("%s",r);
+
+}
