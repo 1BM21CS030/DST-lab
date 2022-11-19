@@ -1,0 +1,84 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+#define size 3
+
+int a[size],front=-1,rear=-1;
+
+int isFull(){
+return (rear==size-1);
+}
+
+int isEmpty(){
+return(front==-1&&rear==-1);
+}
+
+void enqueue(int x){
+if(isFull()){
+    printf("Queue is full\n");
+}else if(isEmpty()){
+a[++rear]=x;
+front++;
+}else{
+a[++rear]=x;
+}
+}
+
+void dequeue(){
+    if(rear==front){
+front=-1;
+rear=-1;
+printf("Queue is empty\n");
+}else{
+front++;
+}
+}
+
+void display(){
+    int i=front;
+if(isEmpty()){
+    printf("Queue is empty\n");
+}else{
+    while(i!=rear+1){
+printf("%d\n",a[i++]);
+    }
+}
+}
+
+void main(){
+int x,choice;
+while(1){
+    printf("Enter your choice\n 1.Push\n 2.Pop\n 3.Display front element\n 4.Exit\n");
+    scanf("%d",&choice);
+
+    switch(choice){
+
+    case 1: if(isFull()){
+            printf("Queue is full\n");
+    }else{
+        printf("Enter interger\n");
+        scanf("%d",&x);
+        enqueue(x);
+        printf("Front element is %d\n",a[front]);
+    }
+    break;
+
+    case 2: if(isEmpty()){
+            printf("Queue is empty\n");
+    }else{
+        int s=a[front];
+        dequeue();
+        printf("Deleted element is %d\n",s);
+    }
+            break;
+
+    case 3: display();
+            break;
+
+    case 4: exit(0);
+
+    default: printf("Invalid choice\n");
+    }
+}
+}
