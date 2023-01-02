@@ -1,0 +1,204 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int data;
+    struct node* next;
+};
+
+struct node* head = NULL;
+struct node* head1=NULL;
+
+struct node* create_node(){
+    struct node* temp=(struct node*)malloc(sizeof(struct node));
+    temp->next=NULL;
+    return temp;
+}
+
+void add_front(int i,struct node **h){
+    if(*h==NULL){
+        *h=create_node();
+        (*h)->data=i;
+    }else{
+        struct node* temp=create_node();
+        temp->data=i;
+        temp->next=*h;
+        *h=temp;
+    }
+}
+
+/*void add_end(){
+    if(head==NULL){
+        head=create_node();
+    }else{
+        struct node* temp=head;
+        while(temp->next!=NULL)
+        temp=temp->next;
+        temp->next=create_node();
+    }
+}
+
+void add_between(int pos){
+    if(head==NULL){
+        printf("No previous elements exist.New list being created\n");
+        head=create_node();
+    }else{
+        struct node* temp=head;
+        while(pos--!=1)
+        temp=temp->next;
+        struct node* temp1=temp->next;
+        temp->next=create_node();
+        (temp->next)->next=temp1;
+    }
+}*/
+
+void display(struct node **h){
+    if(*h==NULL){
+        printf("No elements have been inserted\n");
+    }else{
+    struct node* i=*h;
+    while (i->next!=NULL)
+    {
+        printf("%d  ",i->data);
+        i=i->next;
+    }
+    printf("%d  ",i->data);
+    printf("\n");
+    }
+}
+
+/*void delete_front(){
+if(head==NULL){
+    printf("Empty\n");
+}else{
+struct node* temp=head;
+head=head->next;
+free(temp);
+}
+}
+
+void delete_end(){
+struct node *temp=head;
+while((temp->next)->next!=NULL)
+    temp=temp->next;
+free(temp->next);
+temp->next=NULL;
+}
+
+void delete_between(int pos){
+if(head==NULL){
+    printf("Empty\n");
+}else if(pos==1){
+delete_front();
+}else {
+struct node* temp=head;
+while(--pos!=1){
+temp=temp->next;
+if(temp==NULL){
+    printf("Invalid position\n");
+    break;
+}
+}
+struct node* temp1=(temp->next)->next;
+free(temp->next);
+temp->next=temp1;
+}
+}
+
+void delete_data(int d){
+struct node* temp=head;
+struct node* temp1;
+struct node* temp2;
+if(head==NULL){
+    printf("Empty\n");
+}else{
+
+if(head->data==d){
+    delete_front();
+}else{
+while(temp->data!=d&&temp->next!=NULL){
+        temp1=temp;
+    temp=temp->next;
+
+    }
+if(temp->data==d){
+    temp2=temp->next;
+free(temp);
+temp1->next=temp2;
+}else{
+printf("Element not found\n");
+}
+}
+}
+}*/
+void sort(struct node **h){
+for(struct node *ptr=*h;ptr->next!=NULL;ptr=ptr->next){
+    for(struct node *temp=ptr->next;temp!=NULL;temp=temp->next){
+        if(ptr->data>temp->data){
+            int d=ptr->data;
+            ptr->data=temp->data;
+            temp->data=d;
+        }
+    }
+}
+}
+
+void reverse(struct node **h){
+struct node *pre=NULL,*cur=*h,*nex=NULL;
+while(cur!=NULL){
+nex=cur->next;
+cur->next=pre;
+pre=cur;
+cur=nex;
+}
+*h=pre;
+}
+
+void concat(){
+struct node* n=head;
+while(n->next!=NULL)
+    n=n->next;
+n->next=head1;
+}
+
+void main(){
+    int choice;
+    printf("1.Sort\n2.Reverse\n3.Concat\n4.Display\n5.Exit\n");
+    for(int i=1;i<4;i++){
+        add_front(i,&head);
+    }
+    while (1)
+    {
+        printf("Enter choice\n");
+        scanf("%d",&choice);
+        switch (choice)
+        {
+        case 1:
+            sort(&head);
+            break;
+
+        case 2:reverse(&head);
+
+            break;
+
+        case 3:
+            for(int i=9;i>6;i--){
+                add_front(i,&head1);
+            }
+            concat();
+            break;
+
+        case 4:
+                    display(&head);
+            break;
+
+        case 5: exit(0);
+
+        default:printf("Invalid choice\n");
+            break;
+        }
+    }
+
+
+}
+
